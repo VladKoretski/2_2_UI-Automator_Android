@@ -26,6 +26,7 @@ class ChangeTextTest {
     private val textToSet = "Netology"
     private val emptyTextToSet = ""
     private val spaceTextToSet = "   "
+    private val anotherActivityText = "Check Button Open Text in Another Activity"
 
     private fun waitForPackage(packageName: String) {
         val context = ApplicationProvider.getApplicationContext<Context>()
@@ -90,6 +91,19 @@ class ChangeTextTest {
 
         val result = device.findObject(By.res(packageName, "textToBeChanged")).text
         assertEquals(result, textToBeDefault)
+    }
+
+    @Test
+    fun testNewActivityText() {
+        val packageName = MODEL_PACKAGE
+        waitForPackage(packageName)
+
+        device.findObject(By.res(packageName, "userInput")).text = anotherActivityText
+        device.findObject(By.res(packageName, "buttonActivity")).click()
+        waitForPackage(packageName)
+
+        val result = device.findObject(By.res(packageName, "text")).text
+        assertEquals(result, anotherActivityText)
     }
 }
 
